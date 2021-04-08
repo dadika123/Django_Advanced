@@ -4,7 +4,7 @@
     <div class="col-lg-7">
         <div class="alert alert-warning alert-dismissible fade show" role="alert" style="margin-top: 50px;">
             <strong>Registration Error</strong>
-            {% for fields in register_form %}
+            {% for fields in form %}
                 {% if fields.errors %}
                     {{ fields.errors }}
                 {% endif %}
@@ -23,58 +23,58 @@
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="{{ register_form.username.id_for_label }}">Имя
+                                <label class="small mb-1" for="{{ form.username.id_for_label }}">Имя
                                     Пользователя</label>
-                                {{ register_form.username }}
+                                {{ form.username }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="{{ register_form.first_name.id_for_label }}">Ваше
+                                <label class="small mb-1" for="{{ form.first_name.id_for_label }}">Ваше
                                     имя</label>
-                                {{ register_form.first_name }}
+                                {{ form.first_name }}
                             </div>
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-6">
-                            <label class="small mb-1" for="{{ register_form.last_name.id_for_label }}">Ваше
+                            <label class="small mb-1" for="{{ form.last_name.id_for_label }}">Ваше
                                 фамилия</label>
-                            {{ register_form.last_name }}
+                            {{ form.last_name }}
                         </div>
                         <div class="col-md-6">
-                            <label class="small mb-1" for="{{ register_form.email.id_for_label }}">Ваш email</label>
-                            {{ register_form.email }}
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small mb-1" for="{{ register_form.password1.id_for_label }}">Введите
-                                    пароль</label>
-                                {{ register_form.password1 }}
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="small mb-1" for="{{ register_form.password2.id_for_label }}">Подтвердите
-                                    пароль</label>
-                                {{ register_form.password2 }}
-                            </div>
+                            <label class="small mb-1" for="{{ form.email.id_for_label }}">Ваш email</label>
+                            {{ form.email }}
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="{{ register_form.age.id_for_label }}">Ваш возраст</label>
-                                {{ register_form.age }}
+                                <label class="small mb-1" for="{{ form.password1.id_for_label }}">Введите
+                                    пароль</label>
+                                {{ form.password1 }}
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
-                                <label class="small mb-1" for="{{ register_form.avatar.id_for_label }}">Фото
+                                <label class="small mb-1" for="{{ form.password2.id_for_label }}">Подтвердите
+                                    пароль</label>
+                                {{ form.password2 }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="{{ form.age.id_for_label }}">Ваш возраст</label>
+                                {{ form.age }}
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="small mb-1" for="{{ form.avatar.id_for_label }}">Фото
                                     профиля</label>
-                                {{ register_form.avatar }}
+                                {{ form.avatar }}
                             </div>
                         </div>
                     </div>
