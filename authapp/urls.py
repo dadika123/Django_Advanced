@@ -1,13 +1,13 @@
-from django.urls import path, re_path
+from django.urls import path
 
-from authapp.views import register, login, logout, profile, send_verify_mail, verify
+from authapp.views import Login, Logout, RegisterView, ProfileEdit
 
 app_name = 'authapp'
 
 urlpatterns = [
-    path('login/', login, name='login'),
-    path('logout/', logout, name='logout'),
-    path('register/', register, name='register'),
-    path('profile/', profile, name='profile'),
-    re_path(r'^verify/(?P<email>.+)/(?P<activation_key>\w+)/$', verify, name='verify'),
+    path('login/', Login.as_view(), name='login'),
+    path('logout/', Logout.as_view(), name='logout'),
+    path('register/', RegisterView.as_view(), name='register'),
+    path('profile/', ProfileEdit.as_view(), name='profile'),
+    path('verify/<str:email>/<str:activation_key>/', RegisterView.verify, name='verify'),
 ]
