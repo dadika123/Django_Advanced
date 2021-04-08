@@ -13,7 +13,7 @@
                 <div class="col-lg-12 text-center">
                     {% if user.avatar %}
                         <div class="user_avatar"><img width="100" height="100" class="img-thumbnail"
-                                                      src="{{ media_url }}{{ user.avatar }}"></div>
+                                                      src="{{ user.avatar.url }}"></div>
                     {% endif %}
                 </div>
                 <form action="{% url 'auth:profile' %}" method="post" enctype="multipart/form-data">
@@ -37,7 +37,11 @@
                             <div class="custom-file">
                                 {{ form.avatar }}
                                 <label class="custom-file-label" for="{{ form.avatar.id_for_label }}">
-                                    Выберите изображение
+                                    {% if user.avatar %}
+                                        {{ user.avatar.url }}
+                                    {% else %}
+                                        Выберите изображение
+                                    {% endif %}
                                 </label>
                             </div>
                         </div>

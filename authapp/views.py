@@ -10,7 +10,7 @@ from django.shortcuts import render, HttpResponseRedirect, redirect, get_object_
 from django.urls import reverse, reverse_lazy
 from django.views.generic import FormView, UpdateView
 
-from authapp.forms import ShopUserLoginForm, ShopUserProfileForm, UserProfileEditForm, ShopUserRegisterForm
+from authapp.forms import ShopUserLoginForm, ShopUserProfileForm, ShopUserProfileEditForm, ShopUserRegisterForm
 from basketapp.models import Basket
 from .models import User
 from .models import UserProfile
@@ -18,7 +18,7 @@ from .models import UserProfile
 
 class Login(LoginView):
     model = User
-    success_url = reverse_lazy('mainapp:index')
+    success_url = '/'
     form_class = ShopUserLoginForm
     template_name = 'authapp/login.html'
     title = 'Login'
@@ -76,7 +76,7 @@ class Logout(LogoutView):
 class ProfileEdit(LoginRequiredMixin, UpdateView):
     model = UserProfile
     form_class = ShopUserProfileForm
-    form_class_second = UserProfileEditForm
+    form_class_second = ShopUserProfileEditForm
     success_url = reverse_lazy('auth:profile')
     template_name = 'authapp/profile.html'
 
@@ -90,14 +90,13 @@ class ProfileEdit(LoginRequiredMixin, UpdateView):
         user = User.objects.get(pk=self_pk)
         context['profile_form'] = self.form_class_second(instance=user.userprofile)
         context['baskets'] = Basket.objects.filter(user=user)
-        context['media_url'] = settings.MEDIA_URL
         return context
 
     @transaction.atomic
     def post(self, request, *args, **kwargs):
         user = User.objects.get(pk=self.request.user.pk)
         edit_form = ShopUserProfileForm(data=request.POST, files=request.FILES, instance=user)
-        profile_form = UserProfileEditForm(data=request.POST, files=request.FILES, instance=user.userprofile)
+        profile_form = ShopUserProfileEditForm(data=request.POST, files=request.FILES, instance=user.userprofile)
 
         if edit_form.is_valid() and profile_form.is_valid():
             edit_form.save()

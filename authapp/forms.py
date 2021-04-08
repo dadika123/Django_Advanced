@@ -72,13 +72,13 @@ class ShopUserProfileForm(UserChangeForm):
                 field.widget.attrs['class'] = 'form-control py-4'
 
 
-class UserProfileEditForm(forms.ModelForm):
+class ShopUserProfileEditForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = ('tagline', 'about_me', 'gender')
 
     def __init__(self, *args, **kwargs):
-        super(UserProfileEditForm, self).__init__(*args, **kwargs)
+        super(ShopUserProfileEditForm, self).__init__(*args, **kwargs)
         self.fields['about_me'].widget.attrs['rows'] = 1
         for field_name, field in self.fields.items():
             field.widget.attrs['class'] = 'form-control'

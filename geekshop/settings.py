@@ -143,7 +143,9 @@ AUTHENTICATION_BACKENDS = {
 }
 
 LOGIN_URL = '/auth/login/'
-LOGIN_ERROR_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
+
 
 SOCIAL_AUTH_VK_OAUTH2_IGNORE_DEFAULT_SCOPE = True
 SOCIAL_AUTH_VK_OAUTH2_SCOPE = ['email']
@@ -155,14 +157,14 @@ EMAIL_HOST_USER = 'bee39a78e80e06'
 EMAIL_HOST_PASSWORD = '338d1eef69024c'
 EMAIL_PORT = '2525'
 
-# SOCIAL_AUTH_PIPELINE = (
-#     'social_core.pipeline.social_auth.social_details',
-#     'social_core.pipeline.social_auth.social_uid',
-#     'social_core.pipeline.social_auth.auth_allowed',
-#     'social_core.pipeline.social_auth.social_user',
-#     'social_core.pipeline.user.create_user',
-#     'authapp.pipeline.save_user_profile',
-#     'social_core.pipeline.social_auth.associate_user',
-#     'social_core.pipeline.social_auth.load_extra_data',
-#     'social_core.pipeline.user.user_details',
-# )
+SOCIAL_AUTH_PIPELINE = (
+    'social_core.pipeline.social_auth.social_details',
+    'social_core.pipeline.social_auth.social_uid',
+    'social_core.pipeline.social_auth.auth_allowed',
+    'social_core.pipeline.social_auth.social_user',
+    'social_core.pipeline.user.create_user',
+    'authapp.pipeline.save_user_profile',
+    'social_core.pipeline.social_auth.associate_user',
+    'social_core.pipeline.social_auth.load_extra_data',
+    'social_core.pipeline.user.user_details',
+)
