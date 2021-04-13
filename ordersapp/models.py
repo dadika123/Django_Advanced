@@ -4,6 +4,15 @@ from geekshop import settings
 from mainapp.models import Product
 
 
+class OrderItemQuerySet(models.QuerySet):
+
+    def delete(self, *args, **kwargs):
+        for object in self:
+            object.product.quantity += object.quantity
+            object.product.save()
+        super(OrderItemQuerySet, self).delete(*args, **kwargs)
+
+
 class Order(models.Model):
     FORMING = 'FM'
     SENT_TO_PROCEED = "STP"
@@ -26,6 +35,7 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=3, choices=ORDER_STATUS_CHOICES, default=FORMING)
     is_active = models.BooleanField(default=True)
+    objects = OrderItemQuerySet.as_manager()
 
     class Meta:
         ordering = ('-created',)
