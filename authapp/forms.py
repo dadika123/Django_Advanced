@@ -17,7 +17,7 @@ class ShopUserLoginForm(AuthenticationForm):
         self.fields['username'].widget.attrs['placeholder'] = 'Введите имя пользователя'
         self.fields['password'].widget.attrs['placeholder'] = 'Введите пароль'
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control py-4'
+            field.widget.attrs['class'] = 'form-control'
 
 
 class ShopUserRegisterForm(UserCreationForm):
@@ -39,9 +39,9 @@ class ShopUserRegisterForm(UserCreationForm):
 
         for field_name, field in self.fields.items():
             if field_name == 'avatar':
-                field.widget.attrs['class'] = 'form-control-file py-4'
+                field.widget.attrs['class'] = 'form-control-file'
             else:
-                field.widget.attrs['class'] = 'form-control py-4'
+                field.widget.attrs['class'] = 'form-control'
             field.help_text = ''
 
     def save(self):
@@ -54,7 +54,7 @@ class ShopUserRegisterForm(UserCreationForm):
 
 
 class ShopUserProfileForm(UserChangeForm):
-    avatar = forms.ImageField(widget=forms.FileInput())
+    avatar = forms.ImageField(widget=forms.FileInput(), required=False)
 
     class Meta:
         model = User
@@ -69,7 +69,7 @@ class ShopUserProfileForm(UserChangeForm):
             if field_name == 'avatar':
                 field.widget.attrs['class'] = 'custom-file-input'
             else:
-                field.widget.attrs['class'] = 'form-control py-4'
+                field.widget.attrs['class'] = 'form-control'
 
 
 class ShopUserProfileEditForm(forms.ModelForm):

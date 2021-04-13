@@ -30,7 +30,7 @@ class Product(models.Model):
     quantity = models.PositiveIntegerField(
         verbose_name='Количество', default=0)
     image = models.ImageField(
-        verbose_name='Изображение', upload_to='products_images', blank=True)
+        verbose_name='Изображение', upload_to='products_images', blank=True, null=True)
 
     def __str__(self):
         return f'{self.category.name}:{self.name}'

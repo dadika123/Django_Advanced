@@ -27,7 +27,7 @@ class NewAdminProfileForm(ShopUserProfileForm):
 
 
 class ProductCreateForm(forms.ModelForm):
-    image = forms.ImageField(widget=forms.FileInput())
+    image = forms.ImageField(widget=forms.FileInput(), required=False)
 
     class Meta:
         model = Product
@@ -36,7 +36,4 @@ class ProductCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProductCreateForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            if field_name == 'image':
-                field.widget.attrs['class'] = 'custom-file-input'
-            else:
-                field.widget.attrs['class'] = 'form-control py-4'
+            field.widget.attrs['class'] = 'form-control'
