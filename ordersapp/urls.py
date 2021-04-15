@@ -1,14 +1,14 @@
 from django.urls import path
 
-from .views import OrderList, OrderDelete, OrderItemsCreate, OrderRead, order_forming_complete, OrderItemsUpdate
+from .views import OrderList, OrderDelete, OrderCreate, OrderRead, order_forming_complete, OrderUpdate
 
 app_name = 'ordersapp'
 
 urlpatterns = [
     path('', OrderList.as_view(), name='orders_list'),
     path('forming/complete/<int:pk>', order_forming_complete, name='order_forming_complete'),
-    path('create/', OrderItemsCreate.as_view(), name='order_create'),
+    path('create/', OrderCreate.as_view(), name='order_create'),
     path('read/<int:pk>/', OrderRead.as_view(), name='order_read'),
-    path('update/<int:pk>/', OrderItemsUpdate.as_view(), name='order_update'),
+    path('update/<int:pk>/', OrderUpdate.as_view(), name='order_update'),
     path('delete/<int:pk>/', OrderDelete.as_view(), name='order_delete'),
 ]
