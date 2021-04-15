@@ -35,7 +35,6 @@ class Order(models.Model):
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=3, choices=ORDER_STATUS_CHOICES, default=FORMING)
     is_active = models.BooleanField(default=True)
-    objects = OrderItemQuerySet.as_manager()
 
     class Meta:
         ordering = ('-created',)
@@ -62,11 +61,13 @@ class Order(models.Model):
         for item in self.orderitems.select_related():
             item.product.quantity += item.quantity
             item.product.save()
+
         self.is_active = False
         self.save()
 
 
 class OrderItem(models.Model):
+    objects = OrderItemQuerySet.as_manager()
     order = models.ForeignKey(Order, related_name="orderitems", on_delete=models.CASCADE)
     product = models.ForeignKey(Product, verbose_name='продукт', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField(verbose_name='количество', default=0)
@@ -74,7 +75,11 @@ class OrderItem(models.Model):
     def get_product_cost(self):
         return self.product.price * self.quantity
 
+    @staticmethod
+    def get_item(pk):
+        return OrderItem.objects.filter(pk=pk).first()
+
     def delete(self):
         self.product.quantity += self.quantity
         self.product.save()
-        super(self.__class__, self).delete()
+        super(OrderItem, self).delete()

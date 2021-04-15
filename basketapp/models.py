@@ -6,6 +6,7 @@ from mainapp.models import Product
 
 
 class BasketQuerySet(models.QuerySet):
+
     def delete(self, *args, **kwargs):
         for object in self:
             object.product.quantity += object.quantity
@@ -35,10 +36,16 @@ class Basket(models.Model):
         user_products = Basket.objects.filter(user=self.user)
         return sum(user_product.sum() for user_product in user_products)
 
+    @staticmethod
+    def get_item(pk):
+        return Basket.objects.filter(pk=pk).first()
+
     def delete(self):
         self.product.quantity += self.quantity
         self.product.save()
         super(self.__class__, self).delete()
+
+        # переопределяем метод, сохранения объекта
 
     def save(self, *args, **kwargs):
         if self.pk:
@@ -47,7 +54,3 @@ class Basket(models.Model):
             self.product.quantity -= self.quantity
         self.product.save()
         super(self.__class__, self).save(*args, **kwargs)
-
-    @staticmethod
-    def get_item(pk):
-        return Basket.objects.filter(pk=pk).first()
