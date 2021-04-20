@@ -73,8 +73,7 @@ class Migration(migrations.Migration):
                 ('gender',
                  models.CharField(blank=True, choices=[('M', 'M'), ('F', 'F')], max_length=1, verbose_name='Gender')),
                 (
-                    'user',
-                    models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                'user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),
     ]

@@ -1,10 +1,11 @@
-from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
 from django.shortcuts import HttpResponseRedirect
+from django.http import JsonResponse
 from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
 
-from basketapp.models import Basket
 from mainapp.models import Product
+from basketapp.models import Basket
+from ordersapp.models import OrderItem
 
 
 @login_required

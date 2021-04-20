@@ -7,6 +7,5 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         users = User.objects.all()
         for user in users:
-            if not user.userprofile:
-                users_profile = UserProfile.objects.create(user=user)
-                users_profile.save()
+            users_profile = UserProfile.objects.create(user=user)
+            users_profile.save()

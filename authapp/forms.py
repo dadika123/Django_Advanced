@@ -54,7 +54,7 @@ class ShopUserRegisterForm(UserCreationForm):
 
 
 class ShopUserProfileForm(UserChangeForm):
-    avatar = forms.ImageField(widget=forms.FileInput(), required=False)
+    avatar = forms.ImageField(widget=forms.FileInput())
 
     class Meta:
         model = User

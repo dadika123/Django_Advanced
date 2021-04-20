@@ -83,13 +83,5 @@ class ProductUpdateView(UpdateView):
     form_class = ProductCreateForm
     success_url = reverse_lazy('new_admin:admin_products')
 
-    def get_context_data(self, **kwargs):
-        context = super(ProductUpdateView, self).get_context_data(**kwargs)
-        context['title'] = 'Редактирование продукта'
-        return context
-
-
 class ProductDeleteView(DeleteView):
     model = Product
-    template_name = 'adminapp/admin-users-update-delete.html'
-    success_url = reverse_lazy('new_admin:admin_products')

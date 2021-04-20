@@ -36,4 +36,7 @@ class ProductCreateForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProductCreateForm, self).__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
-            field.widget.attrs['class'] = 'form-control'
+            if field_name == 'image':
+                field.widget.attrs['class'] = 'custom-file-input'
+            else:
+                field.widget.attrs['class'] = 'form-control'

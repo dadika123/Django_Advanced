@@ -3,14 +3,15 @@ from django.db import transaction
 from django.db.models.signals import pre_save
 from django.dispatch import receiver
 from django.forms import inlineformset_factory
-from django.shortcuts import get_object_or_404, HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from django.views.generic.detail import DetailView
+from django.http import HttpResponseRedirect, JsonResponse
+from django.shortcuts import get_object_or_404
+from django.urls import reverse_lazy, reverse
+from django.views.generic import ListView, CreateView, DeleteView, DetailView, UpdateView
 
 from basketapp.models import Basket
-from ordersapp.forms import OrderItemForm
-from ordersapp.models import Order, OrderItem
+from mainapp.models import Product
+from .forms import OrderItemsForm
+from .models import Order, OrderItem
 
 
 class OrderList(LoginRequiredMixin, ListView):
@@ -28,14 +29,14 @@ class OrderCreate(LoginRequiredMixin, CreateView):
 
     def get_context_data(self, **kwargs):
         data = super().get_context_data(**kwargs)
-        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
+        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=1)
 
         if self.request.POST:
             formset = OrderFormSet(self.request.POST)
         else:
             basket_items = Basket.objects.filter(user=self.request.user)
-            if basket_items.exists():
-                OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=basket_items.count())
+            if basket_items:
+                OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=basket_items.count())
                 formset = OrderFormSet()
                 for num, form in enumerate(formset.forms):
                     form.initial['product'] = basket_items[num].product
@@ -75,7 +76,7 @@ class OrderUpdate(LoginRequiredMixin, UpdateView):
 
     def get_context_data(self, **kwargs):
         data = super(OrderUpdate, self).get_context_data(**kwargs)
-        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemForm, extra=1)
+        OrderFormSet = inlineformset_factory(Order, OrderItem, form=OrderItemsForm, extra=1)
 
         if self.request.POST:
             data['orderitems'] = OrderFormSet(self.request.POST, instance=self.object)
@@ -146,3 +147,11 @@ def product_quantity_update_save(sender, update_fields, instance, **kwargs):
 def product_quantity_update_delete(sender, instance, **kwargs):
     instance.product.quantity += instance.quantity
     instance.product.save()
+
+
+def get_product_price(request, pk):
+    if request.is_ajax():
+        product = Product.objects.filter(pk=int(pk)).first()
+        if product:
+            return JsonResponse({'price': product.price})
+        return JsonResponse({'price': 0})
