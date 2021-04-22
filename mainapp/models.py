@@ -18,13 +18,13 @@ class ProductCategory(models.Model):
 
 class Product(models.Model):
     name = models.CharField(
-        verbose_name='Название Продукта', max_length=64, unique=True)
+        verbose_name='Название Продукта', max_length=80, unique=True)
     category = models.ForeignKey(
         verbose_name='Категория', to=ProductCategory, on_delete=CASCADE)
     description = models.TextField(
         verbose_name='Описание Продукта', blank=True)
     short_description = models.CharField(
-        verbose_name='Краткое Описание', max_length=64)
+        verbose_name='Краткое Описание', max_length=128)
     price = models.DecimalField(
         verbose_name='Цена', decimal_places=2, max_digits=8, default=0)
     quantity = models.PositiveIntegerField(
@@ -35,7 +35,8 @@ class Product(models.Model):
     def __str__(self):
         return f'{self.category.name}:{self.name}'
 
-    def get_items(self):
+    @staticmethod
+    def get_items():
         return Product.objects.filter(is_active=True).order_by('category', 'name')
 
     class Meta:
