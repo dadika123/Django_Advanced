@@ -83,5 +83,6 @@ class ProductUpdateView(UpdateView):
     form_class = ProductCreateForm
     success_url = reverse_lazy('new_admin:admin_products')
 
+
 class ProductDeleteView(DeleteView):
     model = Product
