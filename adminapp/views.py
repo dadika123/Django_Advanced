@@ -68,6 +68,8 @@ class UserDeleteView(DeleteView):
 class ProductListView(ListView):
     model = Product
     template_name = 'adminapp/admin-product-read.html'
+    queryset = Product.objects.select_related('category')
+
 
 
 class ProductCreateView(CreateView):
