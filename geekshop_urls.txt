@@ -1,0 +1,14 @@
+http://192.168.0.105/
+http://192.168.0.105/products/
+http://192.168.0.105/products/category/1/
+http://192.168.0.105/products/category/2/
+http://192.168.0.105/products/category/3/
+http://192.168.0.105/products/category/4/
+http://192.168.0.105/basket/
+http://192.168.0.105/orders/
+http://192.168.0.105/auth/profile/
+http://192.168.0.105/orders/update/1/
+http://192.168.0.105/orders/update/2/
+http://192.168.0.105/auth/login/
+http://192.168.0.105/orders/read/2/
+
